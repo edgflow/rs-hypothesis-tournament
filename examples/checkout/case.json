@@ -1,0 +1,49 @@
+{
+  "question": "Why does promo_code_takes_ten_percent_off fail on CI about one run in four?",
+  "facts": [
+    "On CI it failed in 9 of the last 40 runs.",
+    "It has never failed on our laptops, where we run `cargo test promo_code`.",
+    "CI runs the whole test suite on 8 threads, in UTC, on shared runners. Our laptops are in Auckland.",
+    "When it fails, the total is exactly 100.0: no discount at all."
+  ],
+  "test": {
+    "name": "promo_code_takes_ten_percent_off",
+    "file": "checkout.rs",
+    "failure": "thread 'promo_code_takes_ten_percent_off' panicked at tests/checkout.rs:10:5:\nassertion `left == right` failed: SAVE10 should take 10% off\n  left: 100.0\n right: 90.0"
+  },
+  "explanations": [
+    "Time zone: SAVE10 is valid until the end of today, and today depends on the time zone. CI runs in UTC, our laptops in Auckland, and it only fails on CI.",
+    "Race: refund_restores_full_price clears the same global promo table, and cargo runs tests in parallel. Sometimes SAVE10 is gone before checkout reads it.",
+    "Float rounding: the total is an f64, and 100.0 times 0.9 is not always exactly 90.0."
+  ],
+  "knobs": [
+    {
+      "name": "threads",
+      "about": "how many tests cargo runs at once (RUST_TEST_THREADS)",
+      "values": [
+        "1",
+        "8"
+      ]
+    },
+    {
+      "name": "tz",
+      "about": "the machine's time zone (TZ)",
+      "values": [
+        "UTC",
+        "Pacific/Auckland"
+      ]
+    },
+    {
+      "name": "clock",
+      "about": "the UTC time of day when the test runs (set with a fake clock)",
+      "values": [
+        "09:00",
+        "21:00"
+      ]
+    }
+  ],
+  "ci": {
+    "runs": 40,
+    "failed": 9
+  }
+}

@@ -1,0 +1,79 @@
+{
+  "model": "gpt-5.4-mini",
+  "hypotheses": [
+    {
+      "id": "H1",
+      "name": "Time zone",
+      "claim": "The promo expiry uses local calendar dates, so UTC and Auckland can disagree about whether today has already ended.",
+      "origin": {
+        "explanation": 1
+      },
+      "confidence": 0.15,
+      "bets": {
+        "threads=1 tz=Pacific/Auckland clock=09:00": 0.0,
+        "threads=1 tz=Pacific/Auckland clock=21:00": 0.0,
+        "threads=1 tz=UTC clock=09:00": 0.0,
+        "threads=1 tz=UTC clock=21:00": 1.0,
+        "threads=8 tz=Pacific/Auckland clock=09:00": 0.0,
+        "threads=8 tz=Pacific/Auckland clock=21:00": 0.0,
+        "threads=8 tz=UTC clock=09:00": 0.0,
+        "threads=8 tz=UTC clock=21:00": 1.0
+      }
+    },
+    {
+      "id": "H2",
+      "name": "Global race",
+      "claim": "A different test clears the global promo table in parallel, so SAVE10 is sometimes removed before checkout uses it.",
+      "origin": {
+        "explanation": 2
+      },
+      "confidence": 0.65,
+      "bets": {
+        "threads=1 tz=Pacific/Auckland clock=09:00": 0.0,
+        "threads=1 tz=Pacific/Auckland clock=21:00": 0.0,
+        "threads=1 tz=UTC clock=09:00": 0.0,
+        "threads=1 tz=UTC clock=21:00": 0.0,
+        "threads=8 tz=Pacific/Auckland clock=09:00": 0.25,
+        "threads=8 tz=Pacific/Auckland clock=21:00": 0.25,
+        "threads=8 tz=UTC clock=09:00": 0.25,
+        "threads=8 tz=UTC clock=21:00": 0.25
+      }
+    },
+    {
+      "id": "H3",
+      "name": "Float rounding",
+      "claim": "The total is computed with f64 arithmetic, so the discounted amount can compare unequal to 90.0.",
+      "origin": {
+        "explanation": 3
+      },
+      "confidence": 0.02,
+      "bets": {
+        "threads=1 tz=Pacific/Auckland clock=09:00": 1.0,
+        "threads=1 tz=Pacific/Auckland clock=21:00": 1.0,
+        "threads=1 tz=UTC clock=09:00": 1.0,
+        "threads=1 tz=UTC clock=21:00": 1.0,
+        "threads=8 tz=Pacific/Auckland clock=09:00": 1.0,
+        "threads=8 tz=Pacific/Auckland clock=21:00": 1.0,
+        "threads=8 tz=UTC clock=09:00": 1.0,
+        "threads=8 tz=UTC clock=21:00": 1.0
+      }
+    },
+    {
+      "id": "H4",
+      "name": "Night cleanup",
+      "claim": "A CI-only cleanup step around 21:00 UTC occasionally wipes promo state during the full-suite run.",
+      "origin": "model",
+      "confidence": 0.18,
+      "bets": {
+        "threads=1 tz=Pacific/Auckland clock=09:00": 0.0,
+        "threads=1 tz=Pacific/Auckland clock=21:00": 0.0,
+        "threads=1 tz=UTC clock=09:00": 0.0,
+        "threads=1 tz=UTC clock=21:00": 0.0,
+        "threads=8 tz=Pacific/Auckland clock=09:00": 0.0,
+        "threads=8 tz=Pacific/Auckland clock=21:00": 1.0,
+        "threads=8 tz=UTC clock=09:00": 0.0,
+        "threads=8 tz=UTC clock=21:00": 1.0
+      }
+    }
+  ]
+}

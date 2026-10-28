@@ -1,0 +1,13 @@
+{
+  "cause": "The time zone. checkout decides what 'today' is in the shop's time zone, Pacific/Auckland, but the test sets SAVE10's last day with the machine's local date. On a UTC machine after 11:00 UTC, Auckland is already in tomorrow, so SAVE10 has expired. The race never happens: promos is a thread_local!, so another test's clear() can't touch it.",
+  "fail_rates": {
+    "threads=1 tz=UTC clock=09:00": 0.0,
+    "threads=1 tz=UTC clock=21:00": 1.0,
+    "threads=1 tz=Pacific/Auckland clock=09:00": 0.0,
+    "threads=1 tz=Pacific/Auckland clock=21:00": 0.0,
+    "threads=8 tz=UTC clock=09:00": 0.0,
+    "threads=8 tz=UTC clock=21:00": 1.0,
+    "threads=8 tz=Pacific/Auckland clock=09:00": 0.0,
+    "threads=8 tz=Pacific/Auckland clock=21:00": 0.0
+  }
+}
